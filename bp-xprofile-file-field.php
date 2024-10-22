@@ -1,12 +1,12 @@
 <?php 
 /* 
-Plugin Name: XProfile File Field
-Plugin URI: https://alextheafrican.wordpress.com/2012/03/10/how-to-add-an-file-field-to-buddypress-extended-profile-fields/
+Plugin Name: XProfile Custom File Field
+Plugin URI: http://rococodigital.co.uk
 Description: BuddyPress XProfile addon that adds an File field type
 Version: 3.0.0
 Author: Alex Githatu & Matt Jones
-Author URI: https://alextheafrican.wordpress.com/about/
-License: GPL version 2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+Author URI: https://rococodigital.co.uk
+License: GPLv2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 Copyright: 2024  Alex Githatu  ( email : githatu@syngence.tech )
 */
 
