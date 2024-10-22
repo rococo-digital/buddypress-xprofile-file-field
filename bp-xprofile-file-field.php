@@ -1,6 +1,6 @@
 <?php 
 /* 
-Plugin Name: BuddyPress XProfile File Field
+Plugin Name: XProfile File Field
 Plugin URI: https://alextheafrican.wordpress.com/2012/03/10/how-to-add-an-file-field-to-buddypress-extended-profile-fields/
 Description: BuddyPress XProfile addon that adds an File field type
 Version: 3.0.0

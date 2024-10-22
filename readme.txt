@@ -1,4 +1,4 @@
-=== BuddyPress XProfile Custom File Field ===
+=== XProfile Custom File Field ===
 Contributors: kalengi, matt
 Tags: BuddyPress, XProfile, File Field, Field, File
 Requires at least: 3.2.1
