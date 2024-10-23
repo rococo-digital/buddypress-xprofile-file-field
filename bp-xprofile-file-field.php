@@ -384,6 +384,7 @@ if( ! class_exists( 'BP_XProfile_File_Field' ) ) {
                 $new_signup = bp_members_get_signup_by( 'user_email', $user_email );
 
                 if(empty($new_signup)) {
+                    // translators: This is a fallback for when the user is not properly initialized.
                     $error_message = sprintf( __( 'The user "%1$s" was not properly initialized.', 'bp-xprofile-file-field' ), $user_login );
                     bp_core_add_message( $error_message, 'error' );
                     return;
@@ -406,6 +407,7 @@ if( ! class_exists( 'BP_XProfile_File_Field' ) ) {
                 if ( isset( $_FILES[$field_name] ) ) {
                     if ( empty( $_POST[$field_name] ) ) {
                         $file_name = $_FILES[$field_name]['name'];
+                        // translators: Error message when the file was not uploaded.
                         $error_message = sprintf( __( 'The file %1$s was not uploaded.', 'bp-xprofile-file-field' ), $file_name );
                         bp_core_add_message( $error_message, 'error' );
                     }
@@ -504,6 +506,7 @@ if( ! class_exists( 'BP_XProfile_File_Field' ) ) {
                     $file_copied = @copy( $old_file_location, $new_file_location );
 
                     if( $file_copied === false ) {
+                        // translators: %1$s is the file name being copied somewhere
                         $error_message = sprintf( __( 'The file %1$s could not be relocated.', 'bp-xprofile-file-field' ), $file_name );
                         bp_core_add_message( $error_message, 'error' );
                         
@@ -514,6 +517,7 @@ if( ! class_exists( 'BP_XProfile_File_Field' ) ) {
                     $field_updated = xprofile_set_field_data( $xprofile_field_id, $user_id, $new_file_url );
 
                     if( $field_updated === false ) {
+                        // translators: the file could not be saved to the user profile for some reason
                         $error_message = sprintf( __( 'The field "%1$s" could not be updated for the user %2$s.', 'bp-xprofile-file-field' ), $file_name, $user->data->
                         display_name );
                         bp_core_add_message( $error_message, 'error' );
@@ -616,12 +620,12 @@ if( ! class_exists( 'BP_XProfile_File_Field' ) ) {
 
 function bpxp_file_field_error_wordpress_version() {
     global $wp_version;
-    
+    // translators: %1$s is the current insufficient WordPress version number
     echo '<div class="error"><p>' . sprintf( __( 'Please upgrade WordPress to version 3.2.1 or later. This plugin may not work properly on version %1$s.', 'bp-xprofile-file-field' ), $wp_version ) . '</p></div>';
 }
 
 function bpxp_file_field_error_missing_xprofile() {
-    
+    // translators: requires the BuddyPress Extended Profiles Component
     echo '<div class="error"><p>' . sprintf( __( 'Please ensure you are running BuddyPress 1.5 or later and %1$s BuddyPress Extended Profiles Component %2$s is activated in order for this plugin to work.', 'bp-xprofile-file-field' ), '<a href="' . admin_url( 'options-general.php?page=bp-components' ) . '">', '</a>' ) . '</p></div>';
 }
 

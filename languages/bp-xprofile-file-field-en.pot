@@ -1,0 +1,97 @@
+# Copyright (C) 2024 Alex Githatu & Matt Jones
+# This file is distributed under the GPLv2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html.
+msgid ""
+msgstr ""
+"Project-Id-Version: XProfile Custom File Field 3.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/bp-xprofile-file-field\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2024-10-23T10:16:28+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Domain: bp-xprofile-file-field\n"
+
+#. Plugin Name of the plugin
+#: bp-xprofile-file-field.php
+msgid "XProfile Custom File Field"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: bp-xprofile-file-field.php
+msgid "http://rococodigital.co.uk"
+msgstr ""
+
+#. Description of the plugin
+#: bp-xprofile-file-field.php
+msgid "BuddyPress XProfile addon that adds an File field type"
+msgstr ""
+
+#. Author of the plugin
+#: bp-xprofile-file-field.php
+msgid "Alex Githatu & Matt Jones"
+msgstr ""
+
+#. Author URI of the plugin
+#: bp-xprofile-file-field.php
+msgid "https://rococodigital.co.uk"
+msgstr ""
+
+#: bp-xprofile-file-field.php:121
+#: bp-xprofile-file-field.php:184
+#: classes/class-bp-xprofile-field-type-file.php:215
+msgid "file"
+msgstr ""
+
+#: bp-xprofile-file-field.php:122
+#: classes/class-bp-xprofile-field-type-file.php:27
+msgid "Custom Fields"
+msgstr ""
+
+#: bp-xprofile-file-field.php:157
+msgid "Field type unrecognized"
+msgstr ""
+
+#: bp-xprofile-file-field.php:215
+#: classes/class-bp-xprofile-field-type-file.php:114
+msgid "(required)"
+msgstr ""
+
+#: bp-xprofile-file-field.php:223
+#: classes/class-bp-xprofile-field-type-file.php:150
+msgid "Delete"
+msgstr ""
+
+#: bp-xprofile-file-field.php:387
+msgid "The user \"%1$s\" was not properly initialized."
+msgstr ""
+
+#: bp-xprofile-file-field.php:409
+msgid "The file %1$s was not uploaded."
+msgstr ""
+
+#: bp-xprofile-file-field.php:432
+msgid "The file name could not be saved to the sign-up data"
+msgstr ""
+
+#: bp-xprofile-file-field.php:507
+msgid "The file %1$s could not be relocated."
+msgstr ""
+
+#: bp-xprofile-file-field.php:517
+msgid "The field \"%1$s\" could not be updated for the user %2$s."
+msgstr ""
+
+#: bp-xprofile-file-field.php:620
+msgid "Please upgrade WordPress to version 3.2.1 or later. This plugin may not work properly on version %1$s."
+msgstr ""
+
+#: bp-xprofile-file-field.php:625
+msgid "Please ensure you are running BuddyPress 1.5 or later and %1$s BuddyPress Extended Profiles Component %2$s is activated in order for this plugin to work."
+msgstr ""
+
+#: classes/class-bp-xprofile-field-type-file.php:28
+msgid "File"
+msgstr ""
