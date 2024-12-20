@@ -87,7 +87,6 @@
             },
 
             handleFileDelete : function(deleteButton){
-                debugger;
                 var fileId = jQ(deleteButton).attr("data-file_id");
                 var deleteMsgId = jQ(deleteButton).attr("data-delete_id");
                 

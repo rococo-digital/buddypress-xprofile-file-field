@@ -317,16 +317,19 @@ if( ! class_exists( 'BP_XProfile_File_Field' ) ) {
         
         // reduce rampant code duplication in processing fields
         function bpxp_file_field_process_file_fields($operation) {
-            
             $posted_field_ids = explode( ',', $_POST['signup_profile_field_ids'] );
 
             foreach ( (array)$posted_field_ids as $field_id ) {
-                $field_name = 'field_' . $field_id;
+                // Get the field object to check its type
+                $field = new BP_XProfile_Field($field_id);
+                
+                // Only process if it's a file field
+                if ($field->type === $this::FIELD_TYPE_NAME) {
+                    $field_name = 'field_' . $field_id;
 
-                if ( isset( $_FILES[$field_name] ) ) {
-                    
-                    $operation($field_name, $field_id);
-                    
+                    if ( isset( $_FILES[$field_name] ) ) {
+                        $operation($field_name, $field_id);
+                    }
                 }
             }
         }
@@ -538,51 +541,53 @@ if( ! class_exists( 'BP_XProfile_File_Field' ) ) {
             $post_action = '';
             if (isset($_POST['action'])){
                 $post_action_found = true;
-
                 $post_action = apply_filters('bpxp_file_field_preserve_post_action', $_POST['action']);
-
             }
 
             foreach ( (array)$posted_field_ids as $field_id ) {
-                $field_name = 'field_' . $field_id;
+                // Get the field object to check its type
+                $field = new BP_XProfile_Field($field_id);
+                
+                // Only process if it's a file field
+                if ($field->type === $this::FIELD_TYPE_NAME) {
+                    $field_name = 'field_' . $field_id;
 
-                if ( isset( $_FILES[$field_name] ) ) {
-                    if($_FILES[$field_name]['size'] > 0){
-                        require_once( ABSPATH . '/wp-admin/includes/file.php' );
+                    if ( isset( $_FILES[$field_name] ) ) {
+                        if($_FILES[$field_name]['size'] > 0){
+                            require_once( ABSPATH . '/wp-admin/includes/file.php' );
 
-                        $uploaded_file = $_FILES[$field_name]['tmp_name'];
+                            $uploaded_file = $_FILES[$field_name]['tmp_name'];
 
-                        // Filter the upload location
-                        add_filter( 'upload_dir', array( $this, 'bpxp_file_field_profile_upload_dir'), 10, 1 );
+                            // Filter the upload location
+                            add_filter( 'upload_dir', array( $this, 'bpxp_file_field_profile_upload_dir'), 10, 1 );
 
-                        //ensure WP accepts the upload job
-                        $_POST['action'] = 'wp_handle_upload';
+                            //ensure WP accepts the upload job
+                            $_POST['action'] = 'wp_handle_upload';
 
-                        $wp_uploaded_file = wp_handle_upload( $_FILES[$field_name] );
+                            $wp_uploaded_file = wp_handle_upload( $_FILES[$field_name] );
 
-                        $db_uploaded_file = str_replace(WP_CONTENT_URL, '', $wp_uploaded_file['url']) ;
+                            $db_uploaded_file = str_replace(WP_CONTENT_URL, '', $wp_uploaded_file['url']) ;
 
-                        $uploaded_file = apply_filters('bpxp_file_field_file_uploaded', $db_uploaded_file, $wp_uploaded_file);
+                            $uploaded_file = apply_filters('bpxp_file_field_file_uploaded', $db_uploaded_file, $wp_uploaded_file);
 
-                        $_POST[$field_name] = $uploaded_file;
-                    }
-                    else{
-                        $field_name_hidden = 'field_' . $field_id . '_hidden';
-                        if ( isset( $_POST[$field_name_hidden] ) ) {
-                            $field_name_delete = 'field_' . $field_id . '_delete';
-                            if ( isset( $_POST[$field_name_delete] ) && $_POST[$field_name_delete] == 'deleted') {
-                                $file_file_path = WP_CONTENT_DIR . $_POST[$field_name_hidden];
-                                unlink($file_file_path);
-                                $_POST[$field_name] = '';
-                            }
-                            else {
-                                $_POST[$field_name] = $_POST[$field_name_hidden];
+                            $_POST[$field_name] = $uploaded_file;
+                        }
+                        else{
+                            $field_name_hidden = 'field_' . $field_id . '_hidden';
+                            if ( isset( $_POST[$field_name_hidden] ) ) {
+                                $field_name_delete = 'field_' . $field_id . '_delete';
+                                if ( isset( $_POST[$field_name_delete] ) && $_POST[$field_name_delete] == 'deleted') {
+                                    $file_file_path = WP_CONTENT_DIR . $_POST[$field_name_hidden];
+                                    unlink($file_file_path);
+                                    $_POST[$field_name] = '';
+                                }
+                                else {
+                                    $_POST[$field_name] = $_POST[$field_name_hidden];
+                                }
                             }
                         }
                     }
-
                 }
-
             }
 
             if($post_action_found){
