@@ -270,11 +270,26 @@ if( ! class_exists( 'BP_XProfile_File_Field' ) ) {
             if($screen_edit_profile_priority !== false){
                 
                 if ( isset( $_POST['field_ids'] ) ) { //only override during post
-                    //Remove the default profile_edit handler
-                    remove_action( 'bp_screens', 'xprofile_screen_edit_profile', $screen_edit_profile_priority );
+                    // Check if any of the posted fields are file fields
+                    $posted_field_ids = explode(',', $_POST['field_ids']);
+                    $has_file_fields = false;
 
-                    //Install replalcement hook
-                    add_action( 'bp_screens', array( $this, 'bpxp_file_field_save_on_edit'), $screen_edit_profile_priority );
+                    foreach ($posted_field_ids as $field_id) {
+                        $field = new BP_XProfile_Field($field_id);
+                        if ($field->type === $this::FIELD_TYPE_NAME) {
+                            $has_file_fields = true;
+                            break;
+                        }
+                    }
+
+                    // Only override if we actually have file fields to process
+                    if ($has_file_fields) {
+                        //Remove the default profile_edit handler
+                        remove_action( 'bp_screens', 'xprofile_screen_edit_profile', $screen_edit_profile_priority );
+
+                        //Install replacement hook
+                        add_action( 'bp_screens', array( $this, 'bpxp_file_field_save_on_edit'), $screen_edit_profile_priority );
+                    }
                 }
             }
             
@@ -317,19 +332,16 @@ if( ! class_exists( 'BP_XProfile_File_Field' ) ) {
         
         // reduce rampant code duplication in processing fields
         function bpxp_file_field_process_file_fields($operation) {
+            
             $posted_field_ids = explode( ',', $_POST['signup_profile_field_ids'] );
 
             foreach ( (array)$posted_field_ids as $field_id ) {
-                // Get the field object to check its type
-                $field = new BP_XProfile_Field($field_id);
-                
-                // Only process if it's a file field
-                if ($field->type === $this::FIELD_TYPE_NAME) {
-                    $field_name = 'field_' . $field_id;
+                $field_name = 'field_' . $field_id;
 
-                    if ( isset( $_FILES[$field_name] ) ) {
-                        $operation($field_name, $field_id);
-                    }
+                if ( isset( $_FILES[$field_name] ) ) {
+                    
+                    $operation($field_name, $field_id);
+                    
                 }
             }
         }
@@ -556,17 +568,17 @@ if( ! class_exists( 'BP_XProfile_File_Field' ) ) {
                         if($_FILES[$field_name]['size'] > 0){
                             require_once( ABSPATH . '/wp-admin/includes/file.php' );
 
-                            $uploaded_file = $_FILES[$field_name]['tmp_name'];
+                        $uploaded_file = $_FILES[$field_name]['tmp_name'];
 
-                            // Filter the upload location
-                            add_filter( 'upload_dir', array( $this, 'bpxp_file_field_profile_upload_dir'), 10, 1 );
+                        // Filter the upload location
+                        add_filter( 'upload_dir', array( $this, 'bpxp_file_field_profile_upload_dir'), 10, 1 );
 
-                            //ensure WP accepts the upload job
-                            $_POST['action'] = 'wp_handle_upload';
+                        //ensure WP accepts the upload job
+                        $_POST['action'] = 'wp_handle_upload';
 
-                            $wp_uploaded_file = wp_handle_upload( $_FILES[$field_name] );
+                        $wp_uploaded_file = wp_handle_upload( $_FILES[$field_name] );
 
-                            $db_uploaded_file = str_replace(WP_CONTENT_URL, '', $wp_uploaded_file['url']) ;
+                        $db_uploaded_file = str_replace(WP_CONTENT_URL, '', $wp_uploaded_file['url']) ;
 
                             $uploaded_file = apply_filters('bpxp_file_field_file_uploaded', $db_uploaded_file, $wp_uploaded_file);
 
